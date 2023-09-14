@@ -1,0 +1,77 @@
+{
+    var notificationHandler = function(data) {
+    // Do something with the notifications
+    };
+
+ 
+
+    var focusHandler = function() {
+    // Do something when the visitor is focused
+    // Assume the visitor is focused to begin with
+    };
+
+ 
+
+    var blurHandler = function() {
+    // Do something when the visitor is blurred
+    // Assume the visitor is focused to begin with
+    };
+}
+    lpTag.agentSDK.init({
+    notificationCallback: notificationHandler,
+    visitorFocusedCallback: focusHandler,
+    visitorBlurredCallback: blurHandler
+});
+
+ 
+
+ 
+
+    var notifyWhenDone = function(err) {
+        if (err) {
+            // Do something with the error
+        }
+        // called when the command is completed successfully,
+        // or when the action terminated with an error.
+    };
+
+ 
+
+
+function omdbsearch() {
+    const movieName = document.getElementById('search').value;
+    const apiKey = 'f6096e1a';
+
+ 
+
+    
+    const apiUrl = `https://www.omdbapi.com/?t=${movieName}&apikey=${apiKey}`;
+
+ 
+
+    
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            // Update the HTML content with movie information
+            const div = document.getElementById('movieData');
+            div.innerHTML = `
+<h2>${data.Title}</h2>
+<p><strong>Year:</strong> ${data.Year}</p>
+<p><strong>Director:</strong> ${data.Director}</p>
+<p><strong>Genre:</strong> ${data.Genre}</p> `;
+var dataForSDK = {
+    text: `Movie: ${data.Title}\nYear: ${data.Year}\nDirector: ${data.Director}\nGenre: ${data.Genre}`
+};
+
+// Now use the LivePerson SDK to send the movie data
+var cmdName = lpTag.agentSDK.cmdNames.write; // = "Write ChatLine"
+
+lpTag.agentSDK.command(cmdName, dataForSDK, notifyWhenDone);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+}
+
+

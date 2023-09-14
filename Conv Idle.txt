@@ -1,0 +1,21 @@
+function lambda(input, callback) {
+    // Set conversation data.
+    let conversation = input.payload;
+    // Some processing ...
+    // Result can be either an object or array.
+    // Hint: Make sure to only return each type once.
+    let result = [
+        {
+            type: "systemMessage", // Returns a system message into the conversation.
+            text: "We haven't heard back from you, tranferring to agent"
+        },
+        {
+            type: "transfer", // Transfers the conversation to a new skill.
+            skillId: "1732058170"
+        },
+        //{
+          //  type: "closeConversation" // Closes the conversation.
+        //}
+    ];
+    callback(null, result);
+}
